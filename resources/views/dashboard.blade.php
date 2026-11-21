@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="utf-8">
-    <title>Dashboard - POS Barokah Mart</title>
-    @vite('resources/css/app.css')
-</head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-sm w-full max-w-md text-center">
-        <h1 class="text-xl font-semibold">Dashboard</h1>
-        <p class="text-gray-600 mt-2">
-            Selamat datang, {{ auth()->user()->name }} ({{ auth()->user()->role }})
-        </p>
-        <form action="{{ route('logout') }}" method="POST" class="mt-6">
-            @csrf
-            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md">Keluar</button>
-        </form>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <x-card>
+                <h3 class="text-lg font-semibold mb-2">Ringkasan Hari Ini</h3>
+                <p class="text-gray-600">Selamat datang, {{ auth()->user()->name }}.</p>
+            </x-card>
+
+            <x-card>
+                <h3 class="text-lg font-semibold mb-3">Contoh Label Status Stok</h3>
+                <div class="flex items-center gap-6 text-sm">
+                    <div>Stok 25 <x-badge :stock="25" /></div>
+                    <div>Stok 5 <x-badge :stock="5" /></div>
+                    <div>Stok 0 <x-badge :stock="0" /></div>
+                </div>
+            </x-card>
+        </div>
     </div>
-</body>
-</html>
+</x-app-layout>
