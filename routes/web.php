@@ -7,6 +7,9 @@ use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ReceiptController;
 
 
 
@@ -36,6 +39,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
+    Route::resource('suppliers', SupplierController::class)->except('show');
+    Route::resource('purchases', PurchaseController::class)
+    ->only(['index', 'create', 'store', 'show']);
     Route::get('/reports/sales', [ReportController::class, 'sales'])->name('report.sales');
     Route::get('/reports/sales/export', [ReportController::class, 'export'])->name('report.export');
 
@@ -50,4 +56,5 @@ Route::middleware(['auth', 'role:admin,kasir'])->group(function () {
     Route::post('/pos', [PosController::class, 'store'])->name('pos.store');
     Route::get('/pos/riwayat', [PosController::class, 'history'])->name('pos.history');
     Route::get('/pos/{transaction}/struk', [PosController::class, 'struk'])->name('pos.struk');
+    Route::get('/pos/{transaction}/struk', ReceiptController::class)->name('pos.struk');
 });

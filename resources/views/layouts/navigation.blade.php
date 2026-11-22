@@ -20,6 +20,14 @@
                         class="{{ request()->routeIs('report.sales') ? 'text-indigo-600' : 'text-gray-500' }}">
                         Laporan
                     </a>
+                    <a href="{{ route('suppliers.index') }}"
+                        class="{{ request()->routeIs('suppliers.*') ? 'text-indigo-600' : 'text-gray-500' }}">
+                        Supplier
+                    </a>
+                    <a href="{{ route('purchases.index') }}"
+                        class="{{ request()->routeIs('purchases.*') ? 'text-indigo-600' : 'text-gray-500' }}">
+                        Pembelian
+                    </a>
                 @endif
 
                 <a href="{{ route('pos.index') }}"
