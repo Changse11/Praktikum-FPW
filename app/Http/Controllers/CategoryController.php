@@ -28,6 +28,14 @@ class CategoryController extends Controller
             ->with('success', 'Kategori berhasil ditambahkan.');
     }
 
+    public function show(Category $category)
+    {
+    $products = $category->products()->orderBy('name')->get();
+    $totalStok = $products->sum('stock');
+
+    return view('master-data.category.show', compact('category', 'products', 'totalStok'));
+    }   
+
     public function edit(Category $category)
     {
         return view('master-data.category.edit', compact('category'));
