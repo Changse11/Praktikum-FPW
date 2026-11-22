@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 
 class CategoryController extends Controller
@@ -25,5 +26,32 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.index')
             ->with('success', 'Kategori berhasil ditambahkan.');
+    }
+
+    public function edit(Category $category)
+    {
+        return view('master-data.category.edit', compact('category'));
+    }
+
+    public function update(UpdateCategoryRequest $request, Category $category)
+    {
+        $category->update($request->validated());
+
+        return redirect()->route('categories.index')
+            ->with('success', 'Kategori berhasil diperbarui.');
+    }
+
+    public function destroy(Category $category)
+    {
+        if ($category->products()->exists()) {
+            return redirect()->route('categories.index')
+                ->with('error', 'Kategori ' . $category->name . ' tidak dapat dihapus karena masih memiliki '
+                    . $category->products()->count() . ' produk.');
+        }
+
+        $category->delete();
+
+        return redirect()->route('categories.index')
+            ->with('success', 'Kategori berhasil dihapus.');
     }
 }
