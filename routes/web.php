@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -45,8 +46,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:admin,kasir'])->group(function () {
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
     Route::post('/pos', [PosController::class, 'store'])->name('pos.store');
-
-    Route::get('/pos/riwayat', function () {
-        return 'Halaman Riwayat Transaksi Saya (khusus kasir).';
-    })->name('pos.history');
+    Route::get('/pos/riwayat', [PosController::class, 'history'])->name('pos.history');
+    Route::get('/pos/{transaction}/struk', [PosController::class, 'struk'])->name('pos.struk');
 });
